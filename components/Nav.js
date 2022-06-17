@@ -1,5 +1,3 @@
-//import "./Catalog.css";
-
 class Navbar{
     #element;
 
@@ -11,9 +9,14 @@ class Navbar{
             <a href='#catalog'>catalog</a>
             <a href='#cart'>cart</a>
         `;
+    }
+
+    init(){
+        this.create();
 
         return this.#element;
     }
 }
 
-export default new Navbar().create();
+const nav = new Navbar().init();
+export {nav};
