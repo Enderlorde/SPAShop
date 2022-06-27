@@ -1,4 +1,5 @@
-import {nav} from './Nav.js';
+import {header} from './Header.js';
+import {footer} from './Footer.js';
 
 class App{
     #element;
@@ -16,30 +17,38 @@ class App{
         };
 
         return localData;
-
-    }
-
-    loadModule(hash){
-        if (!hash) return;
-        
-        const locateName = new RegExp('^#(.+)');
-        const name = hash.match(locateName)[1];
-        import(`./${name}.js`)
-        .then((module) => {
-            this.#element.innerHTML = '';
-            this.#element.append(module.default);
-        })
-        .catch((err) => {this.#element.innerHTML  = `
-            <h1>404 Not Found</h1>
-        `
-    });
     }
 
     routing(){
-        window.addEventListener('hashchange', (e) => {
-         
-            this.loadModule(new URL(e.newURL).hash);
+        const loadModule = (name) => {
+            //Удалит ли сборщик кэшированный модуль или я получу утечку памяти?
+            import(`./${name}.js?dirtyHackToAvoidCash='${Date.now()}'`)
+            .then((module) => {
+                this.#element.innerHTML = "";
+                this.#element.append(module.default)
+            })
+            .catch((err) => {this.#element.innerHTML  = `
+                <h1>404 Not Found</h1>
+            `;})
+        }
+
+        const getHash = () =>{
+            const hash = location.hash;
+            if (!hash) return 'Main';
+            const locateName = new RegExp('#(\\w+)\\/?');
+            console.log(hash.match(locateName)[1]);
+            return hash.match(locateName)[1];
+        }
+
+        window.addEventListener('hashchange', () => {
+            loadModule(getHash());
         });
+
+        if(location.pathname == "/" && !location.hash){
+            loadModule('Main');
+        }else{
+            loadModule(getHash());
+        }
     }
 
     create(){
@@ -48,8 +57,7 @@ class App{
     }
 
     render(){
-        document.body.append(this.#element);
-        document.body.append(nav);
+        import(`./Nav.js`).then((module) => document.body.append(header, module.default, this.#element, footer));
     }
 
     init(){
@@ -67,22 +75,14 @@ class App{
         styleLink.rel = 'stylesheet';
         styleLink.href = '/css/style.css';
 
-        document.head.append(metaCharset, metaViewport, title, styleLink);
+        const fontawesomeLink = document.createElement('link');
+        fontawesomeLink.rel = 'stylesheet';
+        fontawesomeLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css';
+
+        document.head.append(metaCharset, metaViewport, title, styleLink, fontawesomeLink);
 
         this.getProducts().then((products) => {
             this.create();
-
-            JSON.parse(products).forEach((product) => {
-                const prod = document.createElement('div');
-                prod.classList.add('product');
-
-                prod.innerText = product['title'];
-
-                this.#element.append(prod);
-            })
-            
-
-
             this.render();
             this.routing();
         });
