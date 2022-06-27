@@ -190,7 +190,23 @@ class Main{
             let showroomCart = document.createElement('button');
             showroomCart.classList.add('overlay__cart');  
             showroomCart.addEventListener('click', () => {
-                showroomCart.classList.add('inactive');
+                let cookies = document.cookie;
+                const cartCookies = new RegExp('cart=\\[(.*)\\]')
+                if(cookies != ''){
+                    let cart = decodeURIComponent(cookies.match(cartCookies)[1]);
+                    let cartArray = cart.split(',');
+                    console.log(cartArray);
+                    if (!cartArray.includes(String(product.id))){
+                        cartArray.push(product.id);
+                        document.cookie = `cart=[${cartArray.join(',')}]`;
+                        showroomCart.classList.add('inactive');
+                    }
+                }else{
+                    document.cookie = `cart=[${product.id}]`;
+                    showroomCart.classList.add('inactive');
+                }
+                
+
             });
             showroomCart.innerHTML = "<i class='fa-solid fa-cart-shopping'></i>";
 
