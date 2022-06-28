@@ -5,6 +5,16 @@ class Main{
         return JSON.parse(localStorage.getItem('products'));
     }
 
+    getCart(){
+        let cookies = document.cookie;
+        const cartCookies = new RegExp('cart=\\[(.*)\\]')
+        if(cookies != ''){
+            let cart = decodeURIComponent(cookies.match(cartCookies)[1]);
+            return cart.split(',');
+        }
+        return [];
+    }
+
     create(products) {
         this.#element = document.createElement('main');
         this.#element.classList.add('main');
@@ -189,12 +199,11 @@ class Main{
 
             let showroomCart = document.createElement('button');
             showroomCart.classList.add('overlay__cart');  
+            if (this.getCart().includes(String(product.id))) showroomCart.classList.add('inactive');
+
             showroomCart.addEventListener('click', () => {
-                let cookies = document.cookie;
-                const cartCookies = new RegExp('cart=\\[(.*)\\]')
-                if(cookies != ''){
-                    let cart = decodeURIComponent(cookies.match(cartCookies)[1]);
-                    let cartArray = cart.split(',');
+                if(document.cookie != ''){
+                    let cartArray = this.getCart();
                     console.log(cartArray);
                     if (!cartArray.includes(String(product.id))){
                         cartArray.push(product.id);

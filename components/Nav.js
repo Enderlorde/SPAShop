@@ -24,7 +24,9 @@ class Navbar{
                 </ul>
                 
                 <ul class="nav__item menu">
-                    <li class="menu__item"><a href="#cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    <li class="menu__item">
+                        <a href="#cart"><i class="fa-solid fa-cart-shopping"></i></a>
+                    </li>
                     <li class="menu__item"><a href="#"><i class="fa-solid fa-magnifying-glass"></i></a></li>
                     <li class="menu__item"><a href="#"><i class="fa-solid fa-bars"></i></a></li>
                 </ul>
