@@ -1,19 +1,21 @@
-class Main{
-    #element;
+class Main {
+  #element;
 
-    getProduct(){
-        const getID = new RegExp('#.*\/([0-9]+)');
-        const id = location.hash.match(getID)[1];
-        const product = JSON.parse(localStorage.getItem('products')).find(item => item.id == id);
-        console.log(id);
-        return product;
-    }
+  getProduct() {
+    const getID = new RegExp("#.*/([0-9]+)");
+    const id = location.hash.match(getID)[1];
+    const product = JSON.parse(localStorage.getItem("products")).find(
+      (item) => item.id == id
+    );
+    console.log(id);
+    return product;
+  }
 
-    create(product) {
-        this.#element = document.createElement('section');
-        this.#element.classList.add('detail');
+  create(product) {
+    this.#element = document.createElement("section");
+    this.#element.classList.add("detail");
 
-        this.#element.innerHTML = `
+    this.#element.innerHTML = `
             <div class="detail">
                 <div class="detail__container container">
                     <div class="detail__gallery gallery">
@@ -31,14 +33,14 @@ class Main{
                 </div>
             </div>
         `;
-        console.log('CREATED');
+    console.log("CREATED");
 
-        return this.#element;
-    }
+    return this.#element;
+  }
 
-    init(){
-        return this.create(this.getProduct());  
-    }
+  init() {
+    return this.create(this.getProduct());
+  }
 }
 
 const main = new Main().init();

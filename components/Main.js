@@ -1,25 +1,30 @@
-class Main{
-    #element;
+class Main {
+  #element;
 
-    getProducts(){
-        return JSON.parse(localStorage.getItem('products'));
-    }
+  getProducts() {
+    return JSON.parse(localStorage.getItem("products"));
+  }
 
-    getCart(){
-        let cookies = document.cookie;
-        const cartCookies = new RegExp('cart=\\[(.*)\\]')
-        if(cookies != ''){
-            let cart = decodeURIComponent(cookies.match(cartCookies)[1]);
-            return cart.split(',');
-        }
+  getCart() {
+    let cookies = document.cookie;
+    const cartCookies = new RegExp("cart=\\[(.*)\\]");
+
+    if (cookies !== "") {
+      if (cookies.match(cartCookies)) {
+        let cart = decodeURIComponent(cookies.match(cartCookies)[1]);
+        return cart.split(",");
+      } else {
         return [];
+      }
     }
+    return [];
+  }
 
-    create(products) {
-        this.#element = document.createElement('main');
-        this.#element.classList.add('main');
+  create(products) {
+    this.#element = document.createElement("main");
+    this.#element.classList.add("main");
 
-        this.#element.innerHTML = `
+    this.#element.innerHTML = `
             <div class="promo">
                 <div class="container promo__container">
                     <div class="promo__content" >
@@ -178,86 +183,88 @@ class Main{
             </div>
         `;
 
-        let showroomElement = this.#element.querySelector('#showroomBasic');
+    let showroomElement = this.#element.querySelector("#showroomBasic");
 
-        console.log(showroomElement);
+    console.log(showroomElement);
 
-        products.forEach(product => {
-            let showroomItem = document.createElement('li');
-            showroomItem.classList.add('showroom__item');
+    products.forEach((product) => {
+      let showroomItem = document.createElement("li");
+      showroomItem.classList.add("showroom__item");
 
-            let showroomWrapperItem = document.createElement('div');
-            showroomWrapperItem.classList.add('showroom__wrapperimage');
-        
-            let showroomImage = document.createElement('img');
-            showroomImage.src = product.image;
-            showroomImage.alt = '#';
-            
-            let showroomOverlay = document.createElement('div');
-            showroomOverlay.classList.add('showroom__overlay');
-            showroomOverlay.classList.add('overlay');               
+      let showroomWrapperItem = document.createElement("div");
+      showroomWrapperItem.classList.add("showroom__wrapperimage");
 
-            let showroomCart = document.createElement('button');
-            showroomCart.classList.add('overlay__cart');  
-            if (this.getCart().includes(String(product.id))) showroomCart.classList.add('inactive');
+      let showroomImage = document.createElement("img");
+      showroomImage.src = product.image;
+      showroomImage.alt = "#";
 
-            showroomCart.addEventListener('click', () => {
-                if(document.cookie != ''){
-                    let cartArray = this.getCart();
-                    console.log(cartArray);
-                    if (!cartArray.includes(String(product.id))){
-                        cartArray.push(product.id);
-                        document.cookie = `cart=[${cartArray.join(',')}]`;
-                        showroomCart.classList.add('inactive');
-                    }
-                }else{
-                    document.cookie = `cart=[${product.id}]`;
-                    showroomCart.classList.add('inactive');
-                }
-                
+      let showroomOverlay = document.createElement("div");
+      showroomOverlay.classList.add("showroom__overlay");
+      showroomOverlay.classList.add("overlay");
 
-            });
-            showroomCart.innerHTML = "<i class='fa-solid fa-cart-shopping'></i>";
+      let showroomCart = document.createElement("button");
+      showroomCart.classList.add("overlay__cart");
+      if (this.getCart().includes(String(product.id)))
+        showroomCart.classList.add("inactive");
 
-            showroomOverlay.append(showroomCart);
-            showroomWrapperItem.append(showroomImage, showroomOverlay);
+      showroomCart.addEventListener("click", () => {
+        if (document.cookie != "") {
+          let cartArray = this.getCart();
+          console.log(cartArray);
+          if (!cartArray.includes(String(product.id))) {
+            cartArray.push(product.id);
+            document.cookie = `cart=[${cartArray.join(",")}]`;
+            showroomCart.classList.add("inactive");
+          }
+        } else {
+          document.cookie = `cart=[${product.id}]`;
+          showroomCart.classList.add("inactive");
+        }
+      });
+      showroomCart.innerHTML = "<i class='fa-solid fa-cart-shopping'></i>";
 
-            let showroomTitle = document.createElement('a');
-            showroomTitle.classList.add('showroom__title');
-            showroomTitle.href = `#detail/${product.id}`;
-            showroomTitle.innerText = product.title;
+      showroomOverlay.append(showroomCart);
+      showroomWrapperItem.append(showroomImage, showroomOverlay);
 
-            let showroomPrice = document.createElement('div');
-            showroomPrice.classList.add('showroom__price');
-            showroomPrice.innerText = `$${product.price}`;
+      let showroomTitle = document.createElement("a");
+      showroomTitle.classList.add("showroom__title");
+      showroomTitle.href = `#detail/${product.id}`;
+      showroomTitle.innerText = product.title;
 
-            let showroomGrade = document.createElement('ul');
-            showroomGrade.classList.add('showroom__grade');
-            showroomGrade.classList.add('grade');
+      let showroomPrice = document.createElement("div");
+      showroomPrice.classList.add("showroom__price");
+      showroomPrice.innerText = `$${product.price}`;
 
-            showroomGrade.innerHTML = `
+      let showroomGrade = document.createElement("ul");
+      showroomGrade.classList.add("showroom__grade");
+      showroomGrade.classList.add("grade");
+
+      showroomGrade.innerHTML = `
                 <li class="grade__item grade__item_star"></li>
                 <li class="grade__item grade__item_star"></li>
                 <li class="grade__item grade__item_star"></li>
                 <li class="grade__item grade__item_star"></li>
                 <li class="grade__item grade__item_star"></li>
             `;
-            
 
-            showroomItem.append(showroomWrapperItem, showroomTitle, showroomPrice, showroomGrade);
-            console.log(showroomItem);
-            showroomElement.append(showroomItem);
-        });
+      showroomItem.append(
+        showroomWrapperItem,
+        showroomTitle,
+        showroomPrice,
+        showroomGrade
+      );
+      console.log(showroomItem);
+      showroomElement.append(showroomItem);
+    });
 
-        console.log(this.#element);
+    console.log(this.#element);
 
-        return this.#element;
-    }
+    return this.#element;
+  }
 
-    init(){
-        
-        return this.create(this.getProducts());
-    }
+  init() {
+    return this.create(this.getProducts());
+  }
 }
 
 const main = new Main().init();
