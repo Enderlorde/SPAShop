@@ -94,7 +94,7 @@ class Main {
             <div class="static">
                 <ul class="static__container container">
                     <li>
-                        <img src="../images/Diamond.png" alt="#">
+                        <img src="./images/Diamond.png" alt="#">
 
                         <h4>Special Offers</h4>
 
@@ -102,7 +102,7 @@ class Main {
                     </li>
 
                     <li>
-                        <img src="../images/Plane.png" alt="#">
+                        <img src="./images/Plane.png" alt="#">
 
                         <h4>Free Delivery</h4>
 
@@ -110,7 +110,7 @@ class Main {
                     </li>
 
                     <li>
-                        <img src="../images/Return.png" alt="#">
+                        <img src="./images/Return.png" alt="#">
 
                         <h4>30 days return</h4>
 
@@ -118,7 +118,7 @@ class Main {
                     </li>
 
                     <li>
-                        <img src="../images/Rocket.png" alt="#">
+                        <img src="./images/Rocket.png" alt="#">
 
                         <h4>Fastest shipping</h4>
 
@@ -175,10 +175,10 @@ class Main {
                 </form>
 
                 <ul class="subscribe__clients">
-                    <li><img src="../images/clients/Design_studio.png" alt="#"></li>
-                    <li><img src="../images/clients/Oceandor.png" alt="#"></li>
-                    <li><img src="../images/clients/Restaurant.png" alt="#"></li>
-                    <li><img src="../images/clients/Retrodesign.png" alt="#"></li>
+                    <li><img src="./images/clients/Design_studio.png" alt="#"></li>
+                    <li><img src="./images/clients/Oceandor.png" alt="#"></li>
+                    <li><img src="./images/clients/Restaurant.png" alt="#"></li>
+                    <li><img src="./images/clients/Retrodesign.png" alt="#"></li>
                 </ul>
             </div>
         `
