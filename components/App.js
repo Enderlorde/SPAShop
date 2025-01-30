@@ -83,7 +83,7 @@ class App {
 
     const styleLink = document.createElement('link')
     styleLink.rel = 'stylesheet'
-    styleLink.href = '/css/style.css'
+    styleLink.href = './css/style.css'
 
     const fontawesomeLink = document.createElement('link')
     fontawesomeLink.rel = 'stylesheet'

@@ -1,28 +1,28 @@
 class Main {
-  #element;
+  #element
 
   getProducts() {
-    return JSON.parse(localStorage.getItem("products"));
+    return JSON.parse(localStorage.getItem('products'))
   }
 
   getCart() {
-    let cookies = document.cookie;
-    const cartCookies = new RegExp("cart=\\[(.*)\\]");
+    let cookies = document.cookie
+    const cartCookies = new RegExp('cart=\\[(.*)\\]')
 
-    if (cookies !== "") {
+    if (cookies !== '') {
       if (cookies.match(cartCookies)) {
-        let cart = decodeURIComponent(cookies.match(cartCookies)[1]);
-        return cart.split(",");
+        let cart = decodeURIComponent(cookies.match(cartCookies)[1])
+        return cart.split(',')
       } else {
-        return [];
+        return []
       }
     }
-    return [];
+    return []
   }
 
   create(products) {
-    this.#element = document.createElement("main");
-    this.#element.classList.add("main");
+    this.#element = document.createElement('main')
+    this.#element.classList.add('main')
 
     this.#element.innerHTML = `
             <div class="promo">
@@ -49,7 +49,7 @@ class Main {
                     
                     <ul class="bestsellers__showroom showroom">
                         <li class="showroom__item">
-                            <img src="https://via.placeholder.com/340x450">
+                            <img src="https://placehold.co/340x450">
 
                             <div class="showroom__title">
                                 Lorem
@@ -69,7 +69,7 @@ class Main {
                         </li>
 
                         <li class="showroom__item">
-                            <img src="https://via.placeholder.com/340x450">
+                            <img src="https://placehold.co/340x450">
 
                             <div class="showroom__title">
                                 Lorem
@@ -94,7 +94,7 @@ class Main {
             <div class="static">
                 <ul class="static__container container">
                     <li>
-                        <img src="/images/Diamond.png" alt="#">
+                        <img src="../images/Diamond.png" alt="#">
 
                         <h4>Special Offers</h4>
 
@@ -102,7 +102,7 @@ class Main {
                     </li>
 
                     <li>
-                        <img src="/images/Plane.png" alt="#">
+                        <img src="../images/Plane.png" alt="#">
 
                         <h4>Free Delivery</h4>
 
@@ -110,7 +110,7 @@ class Main {
                     </li>
 
                     <li>
-                        <img src="/images/Return.png" alt="#">
+                        <img src="../images/Return.png" alt="#">
 
                         <h4>30 days return</h4>
 
@@ -118,7 +118,7 @@ class Main {
                     </li>
 
                     <li>
-                        <img src="/images/Rocket.png" alt="#">
+                        <img src="../images/Rocket.png" alt="#">
 
                         <h4>Fastest shipping</h4>
 
@@ -175,69 +175,69 @@ class Main {
                 </form>
 
                 <ul class="subscribe__clients">
-                    <li><img src="/images/clients/Design_studio.png" alt="#"></li>
-                    <li><img src="/images/clients/Oceandor.png" alt="#"></li>
-                    <li><img src="/images/clients/Restaurant.png" alt="#"></li>
-                    <li><img src="/images/clients/Retrodesign.png" alt="#"></li>
+                    <li><img src="../images/clients/Design_studio.png" alt="#"></li>
+                    <li><img src="../images/clients/Oceandor.png" alt="#"></li>
+                    <li><img src="../images/clients/Restaurant.png" alt="#"></li>
+                    <li><img src="../images/clients/Retrodesign.png" alt="#"></li>
                 </ul>
             </div>
-        `;
+        `
 
-    let showroomElement = this.#element.querySelector("#showroomBasic");
+    let showroomElement = this.#element.querySelector('#showroomBasic')
 
-    console.log(showroomElement);
+    console.log(showroomElement)
 
     products.forEach((product) => {
-      let showroomItem = document.createElement("li");
-      showroomItem.classList.add("showroom__item");
+      let showroomItem = document.createElement('li')
+      showroomItem.classList.add('showroom__item')
 
-      let showroomWrapperItem = document.createElement("div");
-      showroomWrapperItem.classList.add("showroom__wrapperimage");
+      let showroomWrapperItem = document.createElement('div')
+      showroomWrapperItem.classList.add('showroom__wrapperimage')
 
-      let showroomImage = document.createElement("img");
-      showroomImage.src = product.image;
-      showroomImage.alt = "#";
+      let showroomImage = document.createElement('img')
+      showroomImage.src = product.image
+      showroomImage.alt = '#'
 
-      let showroomOverlay = document.createElement("div");
-      showroomOverlay.classList.add("showroom__overlay");
-      showroomOverlay.classList.add("overlay");
+      let showroomOverlay = document.createElement('div')
+      showroomOverlay.classList.add('showroom__overlay')
+      showroomOverlay.classList.add('overlay')
 
-      let showroomCart = document.createElement("button");
-      showroomCart.classList.add("overlay__cart");
+      let showroomCart = document.createElement('button')
+      showroomCart.classList.add('overlay__cart')
       if (this.getCart().includes(String(product.id)))
-        showroomCart.classList.add("inactive");
+        showroomCart.classList.add('inactive')
 
-      showroomCart.addEventListener("click", () => {
-        if (document.cookie != "") {
-          let cartArray = this.getCart();
-          console.log(cartArray);
+      showroomCart.addEventListener('click', () => {
+        if (document.cookie != '') {
+          let cartArray = this.getCart()
+          console.log(cartArray)
           if (!cartArray.includes(String(product.id))) {
-            cartArray.push(product.id);
-            document.cookie = `cart=[${cartArray.join(",")}]`;
-            showroomCart.classList.add("inactive");
+            cartArray.push(product.id)
+            document.cookie = `cart=[${cartArray.join(',')}]`
+            showroomCart.classList.add('inactive')
           }
         } else {
-          document.cookie = `cart=[${product.id}]`;
-          showroomCart.classList.add("inactive");
+          document.cookie = `cart=[${product.id}]`
+          showroomCart.classList.add('inactive')
         }
-      });
-      showroomCart.innerHTML = "<i class='fa-solid fa-cart-shopping'></i>";
+      })
+      showroomCart.innerHTML = "<i class='fa-solid fa-cart-shopping'></i>"
 
-      showroomOverlay.append(showroomCart);
-      showroomWrapperItem.append(showroomImage, showroomOverlay);
+      showroomOverlay.append(showroomCart)
+      showroomWrapperItem.append(showroomImage, showroomOverlay)
 
-      let showroomTitle = document.createElement("a");
-      showroomTitle.classList.add("showroom__title");
-      showroomTitle.href = `#detail/${product.id}`;
-      showroomTitle.innerText = product.title;
+      let showroomTitle = document.createElement('a')
+      showroomTitle.classList.add('showroom__title')
+      showroomTitle.href = `#detail/${product.id}`
+      showroomTitle.innerText = product.title
 
-      let showroomPrice = document.createElement("div");
-      showroomPrice.classList.add("showroom__price");
-      showroomPrice.innerText = `$${product.price}`;
+      let showroomPrice = document.createElement('div')
+      showroomPrice.classList.add('showroom__price')
+      showroomPrice.innerText = `$${product.price}`
 
-      let showroomGrade = document.createElement("ul");
-      showroomGrade.classList.add("showroom__grade");
-      showroomGrade.classList.add("grade");
+      let showroomGrade = document.createElement('ul')
+      showroomGrade.classList.add('showroom__grade')
+      showroomGrade.classList.add('grade')
 
       showroomGrade.innerHTML = `
                 <li class="grade__item grade__item_star"></li>
@@ -245,27 +245,27 @@ class Main {
                 <li class="grade__item grade__item_star"></li>
                 <li class="grade__item grade__item_star"></li>
                 <li class="grade__item grade__item_star"></li>
-            `;
+            `
 
       showroomItem.append(
         showroomWrapperItem,
         showroomTitle,
         showroomPrice,
         showroomGrade
-      );
-      console.log(showroomItem);
-      showroomElement.append(showroomItem);
-    });
+      )
+      console.log(showroomItem)
+      showroomElement.append(showroomItem)
+    })
 
-    console.log(this.#element);
+    console.log(this.#element)
 
-    return this.#element;
+    return this.#element
   }
 
   init() {
-    return this.create(this.getProducts());
+    return this.create(this.getProducts())
   }
 }
 
-const main = new Main().init();
-export default main;
+const main = new Main().init()
+export default main
